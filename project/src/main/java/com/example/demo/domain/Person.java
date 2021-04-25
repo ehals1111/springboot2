@@ -1,10 +1,18 @@
 package com.example.demo.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.validation.Valid;
+
+import com.example.demo.domain.dto.Birthday;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,17 +51,17 @@ public class Person {
 	
 	private String address;
 	
-	
-	private LocalDateTime birthday;
+	@Valid
+	@Embedded
+	private Birthday birthday;
 	
 	
 	private String job;
 	
 	@ToString.Exclude //toString delete
 	private String phoneNumber;
-
-
-
 	
-	
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@ToString.Exclude
+	private Block block; 
 }
